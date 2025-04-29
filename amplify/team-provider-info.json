@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-schola-dev-5d9fc-authRole",
+      "UnauthRoleArn": "arn:aws:iam::602506844737:role/amplify-schola-dev-5d9fc-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::602506844737:role/amplify-schola-dev-5d9fc-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-schola-dev-5d9fc-deployment",
+      "UnauthRoleName": "amplify-schola-dev-5d9fc-unauthRole",
+      "StackName": "amplify-schola-dev-5d9fc",
+      "StackId": "arn:aws:cloudformation:us-east-1:602506844737:stack/amplify-schola-dev-5d9fc/acb3bcb0-241c-11f0-865b-0afff5f85ef1",
+      "AmplifyAppId": "d2weroa60hlkdq"
+    },
+    "categories": {
+      "auth": {
+        "schola9511c355": {}
+      },
+      "api": {
+        "schola": {}
+      }
+    }
+  }
+}

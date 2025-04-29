@@ -1,0 +1,26 @@
+type User @model @auth(rules: [{allow: private}]) {
+  id: ID!
+  displayUsername: String!
+  school: String!
+  webcalURL: String
+  friendships: [Friendship] @hasMany(indexName: "byUser", fields: ["id"])
+}
+
+# Represents a mutual friendship or pending request between two users
+type Friendship @model @auth(rules: [
+  {allow: owner, ownerField: "userId", operations: [create, read, delete]}, 
+  {allow: owner, ownerField: "friendId", operations: [update, read, delete]}
+]) {
+  id: ID!
+  userId: ID! @index(name: "byUser", queryField: "friendshipsByUser") # Initiator of the friendship/request
+  friendId: ID! @index(name: "byFriend", queryField: "friendshipsByFriend") # Recipient of the request
+  user: User @belongsTo(fields: ["userId"]) # Relationship to initiator
+  friend: User @belongsTo(fields: ["friendId"]) # Relationship to recipient
+  status: FriendshipStatus!
+}
+
+enum FriendshipStatus {
+  PENDING 
+  ACCEPTED 
+  REJECTED
+}
