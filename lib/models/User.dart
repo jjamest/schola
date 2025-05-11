@@ -21,6 +21,7 @@
 
 import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
+import 'package:collection/collection.dart';
 
 
 /** This is an auto generated class representing the User type in your schema. */
@@ -30,6 +31,7 @@ class User extends amplify_core.Model {
   final String? _displayUsername;
   final String? _school;
   final String? _webcalURL;
+  final List<Friendship>? _friendships;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -76,6 +78,10 @@ class User extends amplify_core.Model {
     return _webcalURL;
   }
   
+  List<Friendship>? get friendships {
+    return _friendships;
+  }
+  
   amplify_core.TemporalDateTime? get createdAt {
     return _createdAt;
   }
@@ -84,14 +90,15 @@ class User extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const User._internal({required this.id, required displayUsername, required school, webcalURL, createdAt, updatedAt}): _displayUsername = displayUsername, _school = school, _webcalURL = webcalURL, _createdAt = createdAt, _updatedAt = updatedAt;
+  const User._internal({required this.id, required displayUsername, required school, webcalURL, friendships, createdAt, updatedAt}): _displayUsername = displayUsername, _school = school, _webcalURL = webcalURL, _friendships = friendships, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory User({String? id, required String displayUsername, required String school, String? webcalURL}) {
+  factory User({String? id, required String displayUsername, required String school, String? webcalURL, List<Friendship>? friendships}) {
     return User._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       displayUsername: displayUsername,
       school: school,
-      webcalURL: webcalURL);
+      webcalURL: webcalURL,
+      friendships: friendships != null ? List<Friendship>.unmodifiable(friendships) : friendships);
   }
   
   bool equals(Object other) {
@@ -105,7 +112,8 @@ class User extends amplify_core.Model {
       id == other.id &&
       _displayUsername == other._displayUsername &&
       _school == other._school &&
-      _webcalURL == other._webcalURL;
+      _webcalURL == other._webcalURL &&
+      DeepCollectionEquality().equals(_friendships, other._friendships);
   }
   
   @override
@@ -127,24 +135,27 @@ class User extends amplify_core.Model {
     return buffer.toString();
   }
   
-  User copyWith({String? displayUsername, String? school, String? webcalURL}) {
+  User copyWith({String? displayUsername, String? school, String? webcalURL, List<Friendship>? friendships}) {
     return User._internal(
       id: id,
       displayUsername: displayUsername ?? this.displayUsername,
       school: school ?? this.school,
-      webcalURL: webcalURL ?? this.webcalURL);
+      webcalURL: webcalURL ?? this.webcalURL,
+      friendships: friendships ?? this.friendships);
   }
   
   User copyWithModelFieldValues({
     ModelFieldValue<String>? displayUsername,
     ModelFieldValue<String>? school,
-    ModelFieldValue<String?>? webcalURL
+    ModelFieldValue<String?>? webcalURL,
+    ModelFieldValue<List<Friendship>?>? friendships
   }) {
     return User._internal(
       id: id,
       displayUsername: displayUsername == null ? this.displayUsername : displayUsername.value,
       school: school == null ? this.school : school.value,
-      webcalURL: webcalURL == null ? this.webcalURL : webcalURL.value
+      webcalURL: webcalURL == null ? this.webcalURL : webcalURL.value,
+      friendships: friendships == null ? this.friendships : friendships.value
     );
   }
   
@@ -153,11 +164,24 @@ class User extends amplify_core.Model {
       _displayUsername = json['displayUsername'],
       _school = json['school'],
       _webcalURL = json['webcalURL'],
+      _friendships = json['friendships']  is Map
+        ? (json['friendships']['items'] is List
+          ? (json['friendships']['items'] as List)
+              .where((e) => e != null)
+              .map((e) => Friendship.fromJson(new Map<String, dynamic>.from(e)))
+              .toList()
+          : null)
+        : (json['friendships'] is List
+          ? (json['friendships'] as List)
+              .where((e) => e?['serializedData'] != null)
+              .map((e) => Friendship.fromJson(new Map<String, dynamic>.from(e?['serializedData'])))
+              .toList()
+          : null),
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'displayUsername': _displayUsername, 'school': _school, 'webcalURL': _webcalURL, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'displayUsername': _displayUsername, 'school': _school, 'webcalURL': _webcalURL, 'friendships': _friendships?.map((Friendship? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
@@ -165,6 +189,7 @@ class User extends amplify_core.Model {
     'displayUsername': _displayUsername,
     'school': _school,
     'webcalURL': _webcalURL,
+    'friendships': _friendships,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
@@ -174,6 +199,9 @@ class User extends amplify_core.Model {
   static final DISPLAYUSERNAME = amplify_core.QueryField(fieldName: "displayUsername");
   static final SCHOOL = amplify_core.QueryField(fieldName: "school");
   static final WEBCALURL = amplify_core.QueryField(fieldName: "webcalURL");
+  static final FRIENDSHIPS = amplify_core.QueryField(
+    fieldName: "friendships",
+    fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'Friendship'));
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "User";
     modelSchemaDefinition.pluralName = "Users";
@@ -207,6 +235,13 @@ class User extends amplify_core.Model {
       key: User.WEBCALURL,
       isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.hasMany(
+      key: User.FRIENDSHIPS,
+      isRequired: false,
+      ofModelName: 'Friendship',
+      associatedKey: Friendship.INITIATOR
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.nonQueryField(
