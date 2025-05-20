@@ -22,6 +22,7 @@ class _AppState extends State<App> {
         return null;
       },
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         builder: Authenticator.builder(),
         theme: ScholaTheme.darkTheme,
         home: FutureBuilder<bool>(

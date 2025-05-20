@@ -26,3 +26,7 @@ export 'package:schola/util.dart';
 export 'package:schola/pages/profile/settings.dart';
 export 'package:schola/service/webcal.dart';
 export 'package:schola/pages/profile/edit_field.dart';
+export 'package:schola/pages/components/schedule.dart';
+export 'package:schola/pages/home/view_event.dart';
+export 'package:schola/pages/help/setup_webcal.dart';
+export 'package:schola/pages/components/image.dart';

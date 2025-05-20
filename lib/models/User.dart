@@ -30,7 +30,7 @@ class User extends amplify_core.Model {
   final String id;
   final String? _displayUsername;
   final String? _school;
-  final String? _webcalURL;
+  final String? _scheduleURL;
   final List<Friendship>? _friendships;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
@@ -74,8 +74,8 @@ class User extends amplify_core.Model {
     }
   }
   
-  String? get webcalURL {
-    return _webcalURL;
+  String? get scheduleURL {
+    return _scheduleURL;
   }
   
   List<Friendship>? get friendships {
@@ -90,14 +90,14 @@ class User extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const User._internal({required this.id, required displayUsername, required school, webcalURL, friendships, createdAt, updatedAt}): _displayUsername = displayUsername, _school = school, _webcalURL = webcalURL, _friendships = friendships, _createdAt = createdAt, _updatedAt = updatedAt;
+  const User._internal({required this.id, required displayUsername, required school, scheduleURL, friendships, createdAt, updatedAt}): _displayUsername = displayUsername, _school = school, _scheduleURL = scheduleURL, _friendships = friendships, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory User({String? id, required String displayUsername, required String school, String? webcalURL, List<Friendship>? friendships}) {
+  factory User({String? id, required String displayUsername, required String school, String? scheduleURL, List<Friendship>? friendships}) {
     return User._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       displayUsername: displayUsername,
       school: school,
-      webcalURL: webcalURL,
+      scheduleURL: scheduleURL,
       friendships: friendships != null ? List<Friendship>.unmodifiable(friendships) : friendships);
   }
   
@@ -112,7 +112,7 @@ class User extends amplify_core.Model {
       id == other.id &&
       _displayUsername == other._displayUsername &&
       _school == other._school &&
-      _webcalURL == other._webcalURL &&
+      _scheduleURL == other._scheduleURL &&
       DeepCollectionEquality().equals(_friendships, other._friendships);
   }
   
@@ -127,7 +127,7 @@ class User extends amplify_core.Model {
     buffer.write("id=" + "$id" + ", ");
     buffer.write("displayUsername=" + "$_displayUsername" + ", ");
     buffer.write("school=" + "$_school" + ", ");
-    buffer.write("webcalURL=" + "$_webcalURL" + ", ");
+    buffer.write("scheduleURL=" + "$_scheduleURL" + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -135,26 +135,26 @@ class User extends amplify_core.Model {
     return buffer.toString();
   }
   
-  User copyWith({String? displayUsername, String? school, String? webcalURL, List<Friendship>? friendships}) {
+  User copyWith({String? displayUsername, String? school, String? scheduleURL, List<Friendship>? friendships}) {
     return User._internal(
       id: id,
       displayUsername: displayUsername ?? this.displayUsername,
       school: school ?? this.school,
-      webcalURL: webcalURL ?? this.webcalURL,
+      scheduleURL: scheduleURL ?? this.scheduleURL,
       friendships: friendships ?? this.friendships);
   }
   
   User copyWithModelFieldValues({
     ModelFieldValue<String>? displayUsername,
     ModelFieldValue<String>? school,
-    ModelFieldValue<String?>? webcalURL,
+    ModelFieldValue<String?>? scheduleURL,
     ModelFieldValue<List<Friendship>?>? friendships
   }) {
     return User._internal(
       id: id,
       displayUsername: displayUsername == null ? this.displayUsername : displayUsername.value,
       school: school == null ? this.school : school.value,
-      webcalURL: webcalURL == null ? this.webcalURL : webcalURL.value,
+      scheduleURL: scheduleURL == null ? this.scheduleURL : scheduleURL.value,
       friendships: friendships == null ? this.friendships : friendships.value
     );
   }
@@ -163,7 +163,7 @@ class User extends amplify_core.Model {
     : id = json['id'],
       _displayUsername = json['displayUsername'],
       _school = json['school'],
-      _webcalURL = json['webcalURL'],
+      _scheduleURL = json['scheduleURL'],
       _friendships = json['friendships']  is Map
         ? (json['friendships']['items'] is List
           ? (json['friendships']['items'] as List)
@@ -181,14 +181,14 @@ class User extends amplify_core.Model {
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'displayUsername': _displayUsername, 'school': _school, 'webcalURL': _webcalURL, 'friendships': _friendships?.map((Friendship? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'displayUsername': _displayUsername, 'school': _school, 'scheduleURL': _scheduleURL, 'friendships': _friendships?.map((Friendship? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
     'id': id,
     'displayUsername': _displayUsername,
     'school': _school,
-    'webcalURL': _webcalURL,
+    'scheduleURL': _scheduleURL,
     'friendships': _friendships,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
@@ -198,7 +198,7 @@ class User extends amplify_core.Model {
   static final ID = amplify_core.QueryField(fieldName: "id");
   static final DISPLAYUSERNAME = amplify_core.QueryField(fieldName: "displayUsername");
   static final SCHOOL = amplify_core.QueryField(fieldName: "school");
-  static final WEBCALURL = amplify_core.QueryField(fieldName: "webcalURL");
+  static final SCHEDULEURL = amplify_core.QueryField(fieldName: "scheduleURL");
   static final FRIENDSHIPS = amplify_core.QueryField(
     fieldName: "friendships",
     fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'Friendship'));
@@ -232,7 +232,7 @@ class User extends amplify_core.Model {
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: User.WEBCALURL,
+      key: User.SCHEDULEURL,
       isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));

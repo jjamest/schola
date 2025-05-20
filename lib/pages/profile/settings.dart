@@ -134,8 +134,8 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           _buildProfileItem(
             title: 'Calendar URL',
-            subtitle: user!.webcalURL ?? 'Not set',
-            onTap: () => _navigateToEditPage('Calendar URL', user!.webcalURL),
+            subtitle: user!.scheduleURL ?? 'Not set',
+            onTap: () => _navigateToEditPage('Calendar URL', user!.scheduleURL),
           ),
         ],
       ),

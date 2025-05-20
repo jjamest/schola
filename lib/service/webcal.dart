@@ -1,11 +1,10 @@
 import 'package:schola/barrel.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 class ICalendarParser {
-  final String webcalUrl;
+  final String scheduleUrl;
 
-  ICalendarParser({required this.webcalUrl});
+  ICalendarParser({required this.scheduleUrl});
 
   /// Fetches and returns a list of events for the specified date.
   /// Each event is a Map with keys: SUMMARY, DTSTART, DESCRIPTION.
@@ -14,7 +13,7 @@ class ICalendarParser {
   }) async {
     try {
       // Replace webcal:// with https://
-      final url = webcalUrl.replaceFirst('webcal://', 'https://');
+      final url = scheduleUrl.replaceFirst('webcal://', 'https://');
 
       // Fetch the .ics file
       final response = await http.get(Uri.parse(url));
@@ -80,5 +79,38 @@ class ICalendarParser {
     }
 
     return events;
+  }
+
+  List<Map<String, String>> getEventsForDate(List<Map<String, String>> events) {
+    return events.map((event) {
+      final summary = event['SUMMARY'] ?? 'No title';
+      final startTime = event['DTSTART'] ?? '';
+      final endTime = event['DTEND'] ?? '';
+      final description = event['DESCRIPTION'] ?? 'No description';
+
+      String formatedStartTime = '';
+      String formatedEndTime = '';
+      try {
+        if (startTime.contains('T')) {
+          final startDateTime = DateTime.parse(startTime.replaceAll('Z', ''));
+          final endDateTime = DateTime.parse(endTime.replaceAll('Z', ''));
+          formatedStartTime = DateFormat('h:mm a').format(startDateTime);
+          formatedEndTime = DateFormat('h:mm a').format(endDateTime);
+        } else {
+          formatedStartTime = 'All day';
+          formatedEndTime = 'All day';
+        }
+      } catch (e) {
+        formatedStartTime = 'Unknown time';
+        formatedEndTime = 'Unknown time';
+      }
+
+      return {
+        'summary': summary,
+        'startTime': formatedStartTime,
+        'endTime': formatedEndTime,
+        'description': description,
+      };
+    }).toList();
   }
 }

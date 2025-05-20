@@ -47,7 +47,7 @@ class _EditFieldPageState extends State<EditFieldPage> {
             break;
           case 'Calendar URL':
             updatedUser = widget.user.copyWith(
-              webcalURL: newValue.isEmpty ? "" : newValue,
+              scheduleURL: newValue.isEmpty ? "" : newValue,
             );
             break;
           default:
@@ -81,6 +81,18 @@ class _EditFieldPageState extends State<EditFieldPage> {
         elevation: 0,
         backgroundColor: Colors.grey[900],
         foregroundColor: Colors.white,
+        actions: [
+          if (widget.field == 'Calendar URL')
+            IconButton(
+              icon: const Icon(Icons.info),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SetupWebcal()),
+                );
+              },
+            ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

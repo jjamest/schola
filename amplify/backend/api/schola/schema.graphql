@@ -2,7 +2,7 @@ type User @model @auth(rules: [{ allow: private }]) {
   id: ID!
   displayUsername: String!
   school: String!
-  webcalURL: String
+  scheduleURL: String
   friendships: [Friendship] @hasMany(indexName: "byInitiator", fields: ["id"])
 }
 
