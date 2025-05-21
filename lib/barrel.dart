@@ -30,3 +30,4 @@ export 'package:schola/pages/components/schedule.dart';
 export 'package:schola/pages/home/view_event.dart';
 export 'package:schola/pages/help/setup_webcal.dart';
 export 'package:schola/pages/components/image.dart';
+export 'package:schola/pages/friends/friends.dart';

@@ -4,17 +4,17 @@ class Util {
   Util._();
 
   static Future<bool> userModelExists() async {
-    final currentUser = await Amplify.Auth.getCurrentUser();
-    final userId = currentUser.userId;
-    final userQuery = await Amplify.DataStore.query(
-      User.classType,
-      where: User.ID.eq(userId),
-    );
-
-    if (userQuery.isEmpty) {
+    try {
+      final currentUser = await Amplify.Auth.getCurrentUser();
+      final userId = currentUser.userId;
+      final users = await Amplify.DataStore.query(
+        User.classType,
+        where: User.ID.eq(userId),
+      );
+      final exists = users.isNotEmpty;
+      return exists;
+    } catch (e) {
       return false;
-    } else {
-      return true;
     }
   }
 

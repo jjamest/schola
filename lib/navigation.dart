@@ -7,7 +7,7 @@ class Navigation extends StatelessWidget {
   const Navigation({super.key});
 
   List<Widget> _buildScreens() {
-    return [HomePage(), ProfilePage()];
+    return [HomePage(), FriendsPage(), ProfilePage()];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -15,6 +15,16 @@ class Navigation extends StatelessWidget {
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.map),
         title: 'Home',
+        activeColorPrimary: ScholaTheme.darkTheme.colorScheme.primary,
+        inactiveColorPrimary: ScholaTheme.mediumGray,
+        routeAndNavigatorSettings: RouteAndNavigatorSettings(
+          initialRoute: '/',
+          routes: {},
+        ),
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(CupertinoIcons.group),
+        title: 'Friends',
         activeColorPrimary: ScholaTheme.darkTheme.colorScheme.primary,
         inactiveColorPrimary: ScholaTheme.mediumGray,
         routeAndNavigatorSettings: RouteAndNavigatorSettings(

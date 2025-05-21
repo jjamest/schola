@@ -3,7 +3,7 @@ import 'package:schola/barrel.dart';
 import 'package:flutter/foundation.dart';
 
 class Log {
-  static final Logger _logger = Logger('SightTrack');
+  static final Logger _logger = Logger('Schola');
 
   static void init() {
     Logger.root.level = Level.INFO;

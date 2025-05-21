@@ -5,7 +5,7 @@
         },
     ],
     "settings": {
-        "problems.decorations.enabled": false,
+        "problems.decorations.enabled": true,
         "dart.analysisExcludedFolders": [
             "./lib/models"
         ]

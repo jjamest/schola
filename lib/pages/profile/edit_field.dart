@@ -45,7 +45,7 @@ class _EditFieldPageState extends State<EditFieldPage> {
           case 'Username':
             updatedUser = widget.user.copyWith(displayUsername: newValue);
             break;
-          case 'Calendar URL':
+          case 'Schedule URL':
             updatedUser = widget.user.copyWith(
               scheduleURL: newValue.isEmpty ? "" : newValue,
             );
@@ -82,7 +82,7 @@ class _EditFieldPageState extends State<EditFieldPage> {
         backgroundColor: Colors.grey[900],
         foregroundColor: Colors.white,
         actions: [
-          if (widget.field == 'Calendar URL')
+          if (widget.field == 'Schedule URL')
             IconButton(
               icon: const Icon(Icons.info),
               onPressed: () {
@@ -125,7 +125,7 @@ class _EditFieldPageState extends State<EditFieldPage> {
                 ),
                 style: const TextStyle(color: Colors.white),
                 keyboardType:
-                    widget.field == 'Calendar URL'
+                    widget.field == 'Schedule URL'
                         ? TextInputType.url
                         : TextInputType.text,
                 validator: (value) {
@@ -137,7 +137,7 @@ class _EditFieldPageState extends State<EditFieldPage> {
                       return 'Username must be at least 3 characters';
                     }
                   }
-                  if (widget.field == 'Calendar URL' &&
+                  if (widget.field == 'Schedule URL' &&
                       value != null &&
                       value.trim().isNotEmpty &&
                       !RegExp(

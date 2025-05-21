@@ -78,7 +78,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
       if (scheduleUrl.isEmpty) {
         setState(() {
           todayEvents = [];
-          statusMessage = 'Calendar not set up';
+          statusMessage = 'Schedule not set up';
           isLoading = false;
           webcalSet = false;
         });

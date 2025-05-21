@@ -1,5 +1,4 @@
 import 'package:schola/barrel.dart';
-
 import 'package:flutter/material.dart';
 
 class App extends StatefulWidget {
@@ -22,27 +21,53 @@ class _AppState extends State<App> {
         return null;
       },
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        builder: Authenticator.builder(),
         theme: ScholaTheme.darkTheme,
-        home: FutureBuilder<bool>(
-          future: Util.userModelExists(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              Log.e('Snapshot error: ${snapshot.error}');
-            } else if (snapshot.hasData) {
-              if (snapshot.data == false) {
-                return const WelcomePage();
-              } else {
-                return const Navigation();
-              }
-            }
-            return const SizedBox.shrink();
-          },
-        ),
+        builder: Authenticator.builder(),
+        home: HomeOrWelcome(),
       ),
     );
+  }
+}
+
+class HomeOrWelcome extends StatefulWidget {
+  const HomeOrWelcome({super.key});
+
+  @override
+  State<HomeOrWelcome> createState() => HomeOrWelcomeState();
+}
+
+class HomeOrWelcomeState extends State<HomeOrWelcome> {
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Amplify.Hub.listen(HubChannel.DataStore, (hubEvent) {
+      if (hubEvent.eventName == "ready") {
+        Log.i("Finally ready");
+        setState(() {
+          isLoading = false;
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return isLoading
+        ? const Center(child: CircularProgressIndicator())
+        : FutureBuilder<bool>(
+          future: Util.userModelExists(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Scaffold(body: Center(child: CircularProgressIndicator()));
+            }
+            if (snapshot.hasData && snapshot.data == true) {
+              return Navigation();
+            }
+            return WelcomePage();
+          },
+        );
   }
 }
