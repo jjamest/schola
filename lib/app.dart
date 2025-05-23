@@ -1,5 +1,5 @@
-import 'package:schola/barrel.dart';
 import 'package:flutter/material.dart';
+import 'package:schola/barrel.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -45,7 +45,7 @@ class HomeOrWelcomeState extends State<HomeOrWelcome> {
 
     Amplify.Hub.listen(HubChannel.DataStore, (hubEvent) {
       if (hubEvent.eventName == "ready") {
-        Log.i("Finally ready");
+        Log.i("Synced backend");
         setState(() {
           isLoading = false;
         });
@@ -56,12 +56,13 @@ class HomeOrWelcomeState extends State<HomeOrWelcome> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? const Center(child: CircularProgressIndicator())
+        // ? const Center(child: CircularProgressIndicator())
+        ? LoadingPage()
         : FutureBuilder<bool>(
           future: Util.userModelExists(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Scaffold(body: Center(child: CircularProgressIndicator()));
+              return LoadingPage();
             }
             if (snapshot.hasData && snapshot.data == true) {
               return Navigation();

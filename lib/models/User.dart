@@ -31,7 +31,7 @@ class User extends amplify_core.Model {
   final String? _displayUsername;
   final String? _school;
   final String? _scheduleURL;
-  final List<Friendship>? _friendships;
+  final List<Friendship>? _friends;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -78,8 +78,8 @@ class User extends amplify_core.Model {
     return _scheduleURL;
   }
   
-  List<Friendship>? get friendships {
-    return _friendships;
+  List<Friendship>? get friends {
+    return _friends;
   }
   
   amplify_core.TemporalDateTime? get createdAt {
@@ -90,15 +90,15 @@ class User extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const User._internal({required this.id, required displayUsername, required school, scheduleURL, friendships, createdAt, updatedAt}): _displayUsername = displayUsername, _school = school, _scheduleURL = scheduleURL, _friendships = friendships, _createdAt = createdAt, _updatedAt = updatedAt;
+  const User._internal({required this.id, required displayUsername, required school, scheduleURL, friends, createdAt, updatedAt}): _displayUsername = displayUsername, _school = school, _scheduleURL = scheduleURL, _friends = friends, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory User({String? id, required String displayUsername, required String school, String? scheduleURL, List<Friendship>? friendships}) {
+  factory User({String? id, required String displayUsername, required String school, String? scheduleURL, List<Friendship>? friends}) {
     return User._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       displayUsername: displayUsername,
       school: school,
       scheduleURL: scheduleURL,
-      friendships: friendships != null ? List<Friendship>.unmodifiable(friendships) : friendships);
+      friends: friends != null ? List<Friendship>.unmodifiable(friends) : friends);
   }
   
   bool equals(Object other) {
@@ -113,7 +113,7 @@ class User extends amplify_core.Model {
       _displayUsername == other._displayUsername &&
       _school == other._school &&
       _scheduleURL == other._scheduleURL &&
-      DeepCollectionEquality().equals(_friendships, other._friendships);
+      DeepCollectionEquality().equals(_friends, other._friends);
   }
   
   @override
@@ -135,27 +135,27 @@ class User extends amplify_core.Model {
     return buffer.toString();
   }
   
-  User copyWith({String? displayUsername, String? school, String? scheduleURL, List<Friendship>? friendships}) {
+  User copyWith({String? displayUsername, String? school, String? scheduleURL, List<Friendship>? friends}) {
     return User._internal(
       id: id,
       displayUsername: displayUsername ?? this.displayUsername,
       school: school ?? this.school,
       scheduleURL: scheduleURL ?? this.scheduleURL,
-      friendships: friendships ?? this.friendships);
+      friends: friends ?? this.friends);
   }
   
   User copyWithModelFieldValues({
     ModelFieldValue<String>? displayUsername,
     ModelFieldValue<String>? school,
     ModelFieldValue<String?>? scheduleURL,
-    ModelFieldValue<List<Friendship>?>? friendships
+    ModelFieldValue<List<Friendship>?>? friends
   }) {
     return User._internal(
       id: id,
       displayUsername: displayUsername == null ? this.displayUsername : displayUsername.value,
       school: school == null ? this.school : school.value,
       scheduleURL: scheduleURL == null ? this.scheduleURL : scheduleURL.value,
-      friendships: friendships == null ? this.friendships : friendships.value
+      friends: friends == null ? this.friends : friends.value
     );
   }
   
@@ -164,15 +164,15 @@ class User extends amplify_core.Model {
       _displayUsername = json['displayUsername'],
       _school = json['school'],
       _scheduleURL = json['scheduleURL'],
-      _friendships = json['friendships']  is Map
-        ? (json['friendships']['items'] is List
-          ? (json['friendships']['items'] as List)
+      _friends = json['friends']  is Map
+        ? (json['friends']['items'] is List
+          ? (json['friends']['items'] as List)
               .where((e) => e != null)
               .map((e) => Friendship.fromJson(new Map<String, dynamic>.from(e)))
               .toList()
           : null)
-        : (json['friendships'] is List
-          ? (json['friendships'] as List)
+        : (json['friends'] is List
+          ? (json['friends'] as List)
               .where((e) => e?['serializedData'] != null)
               .map((e) => Friendship.fromJson(new Map<String, dynamic>.from(e?['serializedData'])))
               .toList()
@@ -181,7 +181,7 @@ class User extends amplify_core.Model {
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'displayUsername': _displayUsername, 'school': _school, 'scheduleURL': _scheduleURL, 'friendships': _friendships?.map((Friendship? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'displayUsername': _displayUsername, 'school': _school, 'scheduleURL': _scheduleURL, 'friends': _friends?.map((Friendship? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
@@ -189,7 +189,7 @@ class User extends amplify_core.Model {
     'displayUsername': _displayUsername,
     'school': _school,
     'scheduleURL': _scheduleURL,
-    'friendships': _friendships,
+    'friends': _friends,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
@@ -199,8 +199,8 @@ class User extends amplify_core.Model {
   static final DISPLAYUSERNAME = amplify_core.QueryField(fieldName: "displayUsername");
   static final SCHOOL = amplify_core.QueryField(fieldName: "school");
   static final SCHEDULEURL = amplify_core.QueryField(fieldName: "scheduleURL");
-  static final FRIENDSHIPS = amplify_core.QueryField(
-    fieldName: "friendships",
+  static final FRIENDS = amplify_core.QueryField(
+    fieldName: "friends",
     fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'Friendship'));
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "User";
@@ -215,6 +215,10 @@ class User extends amplify_core.Model {
           amplify_core.ModelOperation.DELETE,
           amplify_core.ModelOperation.READ
         ])
+    ];
+    
+    modelSchemaDefinition.indexes = [
+      amplify_core.ModelIndex(fields: const ["displayUsername"], name: "byUsername")
     ];
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.id());
@@ -238,7 +242,7 @@ class User extends amplify_core.Model {
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.hasMany(
-      key: User.FRIENDSHIPS,
+      key: User.FRIENDS,
       isRequired: false,
       ofModelName: 'Friendship',
       associatedKey: Friendship.INITIATOR

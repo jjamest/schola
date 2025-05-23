@@ -36,4 +36,30 @@ class Util {
       throw Exception('User model not found');
     }
   }
+
+  static Future<User> getUserByID(String userId) async {
+    final userQuery = await Amplify.DataStore.query(
+      User.classType,
+      where: User.ID.eq(userId),
+    );
+
+    if (userQuery.isNotEmpty) {
+      return userQuery.first;
+    } else {
+      throw Exception('User model not found');
+    }
+  }
+
+  static Future<String> getIDByUsername(String username) async {
+    final userQuery = await Amplify.DataStore.query(
+      User.classType,
+      where: User.DISPLAYUSERNAME.eq(username),
+    );
+
+    if (userQuery.isNotEmpty) {
+      return userQuery.first.id;
+    } else {
+      throw Exception('User model not found');
+    }
+  }
 }

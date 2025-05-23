@@ -31,3 +31,5 @@ export 'package:schola/pages/home/view_event.dart';
 export 'package:schola/pages/help/setup_webcal.dart';
 export 'package:schola/pages/components/image.dart';
 export 'package:schola/pages/friends/friends.dart';
+export 'package:schola/loading_page.dart';
+export 'package:schola/service/friendships.dart';

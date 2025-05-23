@@ -1,5 +1,4 @@
 import 'package:schola/barrel.dart';
-
 import 'package:flutter/material.dart';
 
 class EditFieldPage extends StatefulWidget {

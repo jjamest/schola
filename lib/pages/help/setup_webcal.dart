@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schola/pages/components/image.dart';
+import 'package:schola/barrel.dart';
 
 class SetupWebcal extends StatefulWidget {
   const SetupWebcal({super.key});

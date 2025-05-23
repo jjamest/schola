@@ -1,5 +1,4 @@
 import 'package:schola/barrel.dart';
-
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -33,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Center(
                     child: Lottie.asset(
-                      'assets/student_globe.json',
+                      'assets/lottie/student_globe.json',
                       width: 200,
                       height: 200,
                       fit: BoxFit.fill,

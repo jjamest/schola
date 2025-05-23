@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
             isLoading
                 ? 'Loading...'
                 : '${getTitle()}, ${userModel.displayUsername}',
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.displayMedium,
           ),
         ),
       ),

@@ -1,23 +1,24 @@
-type User @model @auth(rules: [{ allow: private }]) {
+type User
+  @model
+  @auth(rules: [{ allow: private }]) {
   id: ID!
-  displayUsername: String!
+  displayUsername: String! @index(name: "byUsername", queryField: "userByUsername")
   school: String!
   scheduleURL: String
-  friendships: [Friendship] @hasMany(indexName: "byInitiator", fields: ["id"])
+  friends: [Friendship] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
-# Represents a mutual friendship or pending request between two users
-type Friendship @model @auth(rules: [
-  { allow: owner, ownerField: "initiatorId", operations: [create, read, delete] },
-  { allow: owner, ownerField: "recipientId", operations: [update, read, delete] }
-]) {
+type Friendship
+  @model
+  @auth(rules: [{ allow: private }]) {
   id: ID!
-  initiatorId: ID! @index(name: "byInitiator", queryField: "friendshipsByInitiator")
-  recipientId: ID! @index(name: "byRecipient", queryField: "friendshipsByRecipient")
+  initiatorId: ID! @index(name: "byUser")
+  recipientId: ID!
   initiator: User @belongsTo(fields: ["initiatorId"])
   recipient: User @belongsTo(fields: ["recipientId"])
   status: FriendshipStatus!
 }
+
 enum FriendshipStatus {
   PENDING
   ACCEPTED

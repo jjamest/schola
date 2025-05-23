@@ -32,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 children: [
                   Center(
                     child: Lottie.asset(
-                      'assets/student_globe.json',
+                      'assets/lottie/student_globe.json',
                       width: 200,
                       height: 200,
                       fit: BoxFit.fill,
@@ -46,7 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   const SizedBox(height: 24),
                   SignUpForm.custom(
                     fields: [
-                      SignUpFormField.email(required: true),
+                      SignUpFormField.username(),
                       SignUpFormField.password(),
                       SignUpFormField.passwordConfirmation(),
                     ],

@@ -42,7 +42,10 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile', style: TextStyle(fontSize: 25)),
+        title: Text(
+          'Profile',
+          style: Theme.of(context).textTheme.displayMedium,
+        ),
         centerTitle: true,
         actions: [
           IconButton(
@@ -60,17 +63,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      const SizedBox(height: 80),
                       Text(
                         user!.displayUsername,
-                        style: const TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.5,
-                          color: Colors.white,
-                        ),
+                        style: Theme.of(context).textTheme.displayLarge,
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 100),
+                      const SizedBox(height: 100),
                       Center(
                         child: TextButton(
                           onPressed: () async {
